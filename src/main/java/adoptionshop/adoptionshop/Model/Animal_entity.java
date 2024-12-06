@@ -1,10 +1,13 @@
 package adoptionshop.adoptionshop.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,6 +51,14 @@ public class Animal_entity {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('YES', 'NO')")
     private Adopted adopted;
+
+    @OneToMany(mappedBy = "animal_entity")
+    @JsonIgnore
+    private List<Adoption_entity> adoption_entityList;
+
+    @OneToOne(mappedBy = "animal_entity")
+    @JsonIgnore
+    private Medical_notes medical_notes;
 
 
 
