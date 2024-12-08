@@ -1,8 +1,10 @@
 package adoptionshop.adoptionshop.Controller;
 
-import adoptionshop.adoptionshop.Model.Animal_entity;
-import adoptionshop.adoptionshop.Service.Animal_service;
+import adoptionshop.adoptionshop.Model.AnimalEntity;
+import adoptionshop.adoptionshop.Service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,23 +14,29 @@ import java.util.Optional;
 @RequestMapping("/animals")
 public class AnimalController {
     @Autowired
-    private Animal_service animal_service;
+    private AnimalService animalService;
 
     @PostMapping
-    public Animal_entity createAnimal(@RequestBody Animal_entity animal_entity){
-        return animal_service.save(animal_entity);
+    public ResponseEntity<AnimalEntity> createAnimal(@RequestBody AnimalEntity animalEntity){
+        AnimalEntity savedAnimal = animalService.save(animalEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAnimal);
     }
     @GetMapping
-    public List<Animal_entity> getAllAnimals(){
-        return animal_service.findAll();
+    public ResponseEntity<List<AnimalEntity>> getAllAnimals(){
+        List<AnimalEntity> getAllAnimals = animalService.findAll();
+        if (getAllAnimals.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(getAllAnimals);
     }
     @GetMapping("/{id}")
-    public Optional<Animal_entity> getAnimalById(@PathVariable int id) {
-        return animal_service.findById(id);
+    public ResponseEntity<AnimalEntity> getAnimalById(@PathVariable int id) {
+        Optional<AnimalEntity> getAnimalById = animalService.findById(id);
+        return getAnimalById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
     @DeleteMapping("/{id}")
     public String deleteAnimal(@PathVariable int id) {
-        animal_service.delete(id);
+        animalService.delete(id);
         return "Animal with ID " + id + " has been deleted";
     }
 

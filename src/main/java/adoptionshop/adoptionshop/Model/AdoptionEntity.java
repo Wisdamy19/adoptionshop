@@ -1,6 +1,5 @@
 package adoptionshop.adoptionshop.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,14 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "adoption_table")
-public class Adoption_entity {
+public class AdoptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "adoption_id")
@@ -26,11 +25,10 @@ public class Adoption_entity {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer_entity customer_entity;
+    private CustomerEntity customerEntity;
 
     @ManyToOne
     @JoinColumn(name = "animal_id")
-    private Animal_entity animal_entity;
-
+    private AnimalEntity animalEntity;
 
 }

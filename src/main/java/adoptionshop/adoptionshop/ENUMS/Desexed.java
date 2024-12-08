@@ -1,4 +1,4 @@
-package adoptionshop.adoptionshop.Model;
+package adoptionshop.adoptionshop.ENUMS;
 
 public enum Desexed {
     YES,

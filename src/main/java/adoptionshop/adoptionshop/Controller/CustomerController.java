@@ -1,9 +1,10 @@
 package adoptionshop.adoptionshop.Controller;
 
-import adoptionshop.adoptionshop.Model.Customer_entity;
-import adoptionshop.adoptionshop.Service.Customer_service;
-import lombok.Getter;
+import adoptionshop.adoptionshop.Model.CustomerEntity;
+import adoptionshop.adoptionshop.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,24 +14,31 @@ import java.util.Optional;
 @RequestMapping("/customers")
 public class CustomerController {
     @Autowired
-    private Customer_service customerService;
+    private CustomerService customerService;
 
     @PostMapping
-    public Customer_entity createCustomer(@RequestBody Customer_entity customer_entity){
-        return customerService.save(customer_entity);
+    public ResponseEntity<CustomerEntity> createCustomer(@RequestBody CustomerEntity customer_entity){
+        CustomerEntity savedCustomer = customerService.save(customer_entity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomer);
     }
     @GetMapping
-    public List<Customer_entity> getAllAnimals(){
-        return customerService.findall();
+    public ResponseEntity<List<CustomerEntity>> getAllCustomers(){
+        List<CustomerEntity> getAllCustomers = customerService.findall();
+        if (getAllCustomers.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(getAllCustomers);
     }
     @GetMapping("/{id}")
-    public Optional<Customer_entity> getCustomerById(@PathVariable int id){
-        return customerService.findById(id);
+    public ResponseEntity<CustomerEntity> getCustomerById(@PathVariable int id){
+        Optional<CustomerEntity> getCustomerById = customerService.findById(id);
+        return getCustomerById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
     }
     @DeleteMapping("/{id}")
-    public String deleteCustomer (@PathVariable int id){
+    public ResponseEntity<String> deleteCustomer (@PathVariable int id){
         customerService.delete(id);
-        return "Customer with Id " + id + " has been deleted";
+        return ResponseEntity.ok(+ id + " has been deleted");
 
     }
 }

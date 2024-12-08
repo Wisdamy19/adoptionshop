@@ -1,6 +1,6 @@
 package adoptionshop.adoptionshop.Service;
 
-import adoptionshop.adoptionshop.Model.Medical_notes;
+import adoptionshop.adoptionshop.Model.MedicalNotesEntity;
 import adoptionshop.adoptionshop.Repository.MedicalNotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,19 +8,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class Medical_notes_service {
+public class MedicalNoteService {
     @Autowired
     MedicalNotesRepository medicalNotesRepository;
 
-    public List<Medical_notes> findAll(){
+    public List<MedicalNotesEntity> findAll(){
         return medicalNotesRepository.findAll();
     }
 
-    public Medical_notes save(Medical_notes medical_notes){
-        return medicalNotesRepository.save(medical_notes);
+    public MedicalNotesEntity save(MedicalNotesEntity medicalNotesEntity){
+        return medicalNotesRepository.save(medicalNotesEntity);
     }
 
-    public Optional<Medical_notes> findById(int id){
+    public Optional<MedicalNotesEntity> findById(int id){
         return medicalNotesRepository.findById(id);
     }
 

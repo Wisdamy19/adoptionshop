@@ -1,9 +1,10 @@
 package adoptionshop.adoptionshop.Controller;
 
-import adoptionshop.adoptionshop.Model.Adoption_entity;
-import adoptionshop.adoptionshop.Model.Customer_entity;
-import adoptionshop.adoptionshop.Service.Adoption_service;
+import adoptionshop.adoptionshop.Model.AdoptionEntity;
+import adoptionshop.adoptionshop.Service.AdoptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,27 +14,34 @@ import java.util.Optional;
 @RequestMapping("/adoptions")
 public class AdoptionController {
     @Autowired
-    Adoption_service adoption_service;
+    AdoptionService adoptionService;
 
     @PostMapping
-    public Adoption_entity createAdoption(@RequestBody Adoption_entity adoption_entity){
-        return adoption_service.save(adoption_entity);
+    public ResponseEntity<AdoptionEntity> createAdoption(@RequestBody AdoptionEntity adoptionEntity){
+        AdoptionEntity savedAdoption = adoptionService.save(adoptionEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAdoption);
+
     }
 
     @GetMapping
-    public List<Adoption_entity> getAllAdoptions(){
-        return adoption_service.findAll();
+    public ResponseEntity<List<AdoptionEntity>> getAllAdoptions(){
+        List<AdoptionEntity> getAllAdoptions = adoptionService.findAll();
+        if (getAllAdoptions.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(getAllAdoptions);
     }
 
     @GetMapping("/{id}")
-    public Optional<Adoption_entity> getAdoptionById(@PathVariable int id){
-        return adoption_service.findById(id);
+    public ResponseEntity<AdoptionEntity> getAdoptionById(@PathVariable int id){
+        Optional<AdoptionEntity> getAdoptionById = adoptionService.findById(id);
+        return getAdoptionById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")
-    public String deleteAdoption (@PathVariable int id){
-        adoption_service.delete(id);
-        return "Customer with Id " + id + " has been deleted";
+    public ResponseEntity<String> deleteAdoption (@PathVariable int id){
+        adoptionService.delete(id);
+        return ResponseEntity.ok( + id + " has been deleted");
 
     }
 }

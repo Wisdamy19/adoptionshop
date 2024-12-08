@@ -1,7 +1,9 @@
 package adoptionshop.adoptionshop.Repository;
 
-import adoptionshop.adoptionshop.Model.Medical_notes;
+import adoptionshop.adoptionshop.Model.MedicalNotesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface MedicalNotesRepository extends JpaRepository<Medical_notes, Integer> {
+@Repository
+public interface MedicalNotesRepository extends JpaRepository<MedicalNotesEntity, Integer> {
 }

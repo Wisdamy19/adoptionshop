@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "customer")
-public class Customer_entity {
+public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
@@ -36,9 +36,9 @@ public class Customer_entity {
     @Column(name = "cpf")
     private String cpf;
 
-    @OneToMany(mappedBy = "customer_entity")
+    @OneToMany(mappedBy = "customerEntity")
     @JsonIgnore
-    private List<Adoption_entity> adoption_entityList;
+    private List<AdoptionEntity> adoptions;
 
 
 }

@@ -1,5 +1,7 @@
 package adoptionshop.adoptionshop.Model;
 
+import adoptionshop.adoptionshop.ENUMS.Desexed;
+import adoptionshop.adoptionshop.ENUMS.Vaccinated;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "medical_notes")
-public class Medical_notes {
+public class MedicalNotesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medical_id")
@@ -24,7 +26,7 @@ public class Medical_notes {
 
     @OneToOne
     @JoinColumn(name = "animal_id")
-    private Animal_entity animal_entity;
+    private AnimalEntity animalEntity;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('YES', 'NO')")

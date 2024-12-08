@@ -1,7 +1,9 @@
 package adoptionshop.adoptionshop.Service;
 
-import adoptionshop.adoptionshop.Model.Adoption_entity;
+import adoptionshop.adoptionshop.Model.AdoptionEntity;
+import adoptionshop.adoptionshop.Model.AnimalEntity;
 import adoptionshop.adoptionshop.Repository.AdoptionRepository;
+import adoptionshop.adoptionshop.Repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,18 +11,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class Adoption_service {
+public class AdoptionService {
     @Autowired
     AdoptionRepository adoptionRepository;
-
-    public List<Adoption_entity> findAll(){
+    @Autowired
+    AnimalRepository animalRepository;
+    AnimalEntity animalEntity;
+    public List<AdoptionEntity> findAll(){
         return adoptionRepository.findAll();
     }
 
-    public Adoption_entity save(Adoption_entity adoption_entity){
-        return adoptionRepository.save(adoption_entity);
+    public AdoptionEntity save(AdoptionEntity adoptionEntity){
+        return adoptionRepository.save(adoptionEntity);
     }
-    public Optional<Adoption_entity> findById(int id){
+    public Optional<AdoptionEntity> findById(int id){
         return adoptionRepository.findById(id);
     }
     public void delete(int id){

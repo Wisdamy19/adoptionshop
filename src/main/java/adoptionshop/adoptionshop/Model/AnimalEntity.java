@@ -1,5 +1,8 @@
 package adoptionshop.adoptionshop.Model;
 
+import adoptionshop.adoptionshop.ENUMS.Adopted;
+import adoptionshop.adoptionshop.ENUMS.Sex;
+import adoptionshop.adoptionshop.ENUMS.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +18,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "animal_table")
-public class Animal_entity {
+public class AnimalEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "animal_id")
@@ -26,6 +29,13 @@ public class Animal_entity {
 
     @Column(name = "name")
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('MALE', 'FEMALE')")
+    private Sex sex;
+
+    @Column(name = "breed")
+    private String breed;
 
     @Column(name = "age")
     private String age;
@@ -52,13 +62,13 @@ public class Animal_entity {
     @Column(columnDefinition = "ENUM('YES', 'NO')")
     private Adopted adopted;
 
-    @OneToMany(mappedBy = "animal_entity")
+    @OneToMany(mappedBy = "animalEntity")
     @JsonIgnore
-    private List<Adoption_entity> adoption_entityList;
+    private List<AdoptionEntity> adoptions;
 
-    @OneToOne(mappedBy = "animal_entity")
+    @OneToOne(mappedBy = "animalEntity", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Medical_notes medical_notes;
+    private MedicalNotesEntity medicalNotesEntity;
 
 
 

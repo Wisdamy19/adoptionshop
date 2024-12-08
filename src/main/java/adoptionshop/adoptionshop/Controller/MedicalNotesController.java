@@ -1,8 +1,10 @@
 package adoptionshop.adoptionshop.Controller;
 
-import adoptionshop.adoptionshop.Model.Medical_notes;
-import adoptionshop.adoptionshop.Service.Medical_notes_service;
+import adoptionshop.adoptionshop.Model.MedicalNotesEntity;
+import adoptionshop.adoptionshop.Service.MedicalNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,25 +14,31 @@ import java.util.Optional;
 @RequestMapping("/medicalnotes")
 public class MedicalNotesController {
     @Autowired
-    Medical_notes_service medical_notes_service;
+    MedicalNoteService medicalNoteService;
 
     @PostMapping
-    public Medical_notes createMedicalNotes(@RequestBody Medical_notes medical_notes){
-        return medical_notes_service.save(medical_notes);
+    public ResponseEntity<MedicalNotesEntity> createMedicalNotes(@RequestBody MedicalNotesEntity medicalNotesEntity){
+        MedicalNotesEntity savedMedicalNotes = medicalNoteService.save(medicalNotesEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedMedicalNotes);
     }
     @GetMapping()
-    public List<Medical_notes> getAllMedicalNotes(){
-        return medical_notes_service.findAll();
+    public ResponseEntity<List<MedicalNotesEntity>> getAllMedicalNotes(){
+        List<MedicalNotesEntity> getAllMedicalNotes = medicalNoteService.findAll();
+        if (getAllMedicalNotes.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(getAllMedicalNotes);
     }
     @GetMapping("/{id}")
-    public Optional<Medical_notes> getMedicalNotesById(@PathVariable int id){
-        return medical_notes_service.findById(id);
+    public ResponseEntity<MedicalNotesEntity> getMedicalNotesById(@PathVariable int id){
+        Optional<MedicalNotesEntity> getMedicalNotesById = medicalNoteService.findById(id);
+        return getMedicalNotesById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")
-    public String deleteMedicalNotes(@PathVariable int id){
-        medical_notes_service.delete(id);
-        return "Medical Notes with Id " + id + " has been deleted";
+    public ResponseEntity<String> deleteMedicalNotes(@PathVariable int id){
+        medicalNoteService.delete(id);
+        return ResponseEntity.ok("Medical Notes with Id " + id + " has been deleted");
     }
 
 }
