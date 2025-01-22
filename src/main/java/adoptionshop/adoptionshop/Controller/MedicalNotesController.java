@@ -30,13 +30,13 @@ public class MedicalNotesController {
         return ResponseEntity.status(HttpStatus.OK).body(getAllMedicalNotes);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<MedicalNotesEntity> getMedicalNotesById(@PathVariable int id){
+    public ResponseEntity<MedicalNotesEntity> getMedicalNotesById(@PathVariable Long id){
         Optional<MedicalNotesEntity> getMedicalNotesById = medicalNoteService.findById(id);
         return getMedicalNotesById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteMedicalNotes(@PathVariable int id){
+    public ResponseEntity<String> deleteMedicalNotes(@PathVariable Long id){
         medicalNoteService.delete(id);
         return ResponseEntity.ok("Medical Notes with Id " + id + " has been deleted");
     }

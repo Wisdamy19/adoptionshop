@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class CustomerService {
+
+    private final CustomerRepository customerRepository;
     @Autowired
-    private CustomerRepository customerRepository;
+    public CustomerService(CustomerRepository customerRepository){
+        this.customerRepository = customerRepository;
+    }
 
     private CustomerEntity customerEntity;
 
@@ -21,10 +25,10 @@ public class CustomerService {
     public CustomerEntity save(CustomerEntity customerEntity){
             return customerRepository.save(customerEntity);
     }
-    public Optional<CustomerEntity> findById(int id){
+    public Optional<CustomerEntity> findById(Long id){
         return customerRepository.findById(id);
     }
-    public void delete(int id){
+    public void delete(Long id){
         customerRepository.deleteById(id);
     }
 

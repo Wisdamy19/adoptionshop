@@ -33,13 +33,13 @@ public class AdoptionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AdoptionEntity> getAdoptionById(@PathVariable int id){
+    public ResponseEntity<AdoptionEntity> getAdoptionById(@PathVariable Long id){
         Optional<AdoptionEntity> getAdoptionById = adoptionService.findById(id);
         return getAdoptionById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAdoption (@PathVariable int id){
+    public ResponseEntity<String> deleteAdoption (@PathVariable Long id){
         adoptionService.delete(id);
         return ResponseEntity.ok( + id + " has been deleted");
 

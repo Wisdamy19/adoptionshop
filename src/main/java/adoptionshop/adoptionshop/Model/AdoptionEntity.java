@@ -18,7 +18,7 @@ public class AdoptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "adoption_id")
-    private int id;
+    private Long id;
 
     @Column(name = "adoption_date", nullable = false)
     private LocalDateTime adoption_date;

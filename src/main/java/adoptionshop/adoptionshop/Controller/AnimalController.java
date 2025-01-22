@@ -30,12 +30,12 @@ public class AnimalController {
         return ResponseEntity.status(HttpStatus.OK).body(getAllAnimals);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<AnimalEntity> getAnimalById(@PathVariable int id) {
+    public ResponseEntity<AnimalEntity> getAnimalById(@PathVariable Long id) {
         Optional<AnimalEntity> getAnimalById = animalService.findById(id);
         return getAnimalById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
     @DeleteMapping("/{id}")
-    public String deleteAnimal(@PathVariable int id) {
+    public String deleteAnimal(@PathVariable Long id) {
         animalService.delete(id);
         return "Animal with ID " + id + " has been deleted";
     }

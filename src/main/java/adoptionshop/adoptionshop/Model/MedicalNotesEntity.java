@@ -19,7 +19,7 @@ public class MedicalNotesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medical_id")
-    private int id;
+    private Long id;
 
     @Column(name = "medical_date")
     private LocalDateTime medical_date;

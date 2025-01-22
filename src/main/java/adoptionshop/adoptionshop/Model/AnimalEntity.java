@@ -3,6 +3,7 @@ package adoptionshop.adoptionshop.Model;
 import adoptionshop.adoptionshop.ENUMS.Adopted;
 import adoptionshop.adoptionshop.ENUMS.Sex;
 import adoptionshop.adoptionshop.ENUMS.Size;
+import adoptionshop.adoptionshop.ENUMS.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,10 +24,11 @@ public class AnimalEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "animal_id")
-    private int id;
+    private Long id;
 
-    @Column(name = "type")
-    private String type;
+    @Enumerated
+    @Column(columnDefinition = "ENUM('DOG', 'CAT')")
+    private Type type;
 
     @Column(name = "name")
     private String name;
@@ -38,7 +41,7 @@ public class AnimalEntity {
     private String breed;
 
     @Column(name = "age")
-    private String age;
+    private LocalDate age;
 
     @Column(name = "adoption_fee")
     private double adoption_fee;
@@ -66,7 +69,7 @@ public class AnimalEntity {
     @JsonIgnore
     private List<AdoptionEntity> adoptions;
 
-    @OneToOne(mappedBy = "animalEntity", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "animalEntity")
     @JsonIgnore
     private MedicalNotesEntity medicalNotesEntity;
 

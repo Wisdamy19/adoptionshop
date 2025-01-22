@@ -30,13 +30,13 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(getAllCustomers);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerEntity> getCustomerById(@PathVariable int id){
+    public ResponseEntity<CustomerEntity> getCustomerById(@PathVariable Long id){
         Optional<CustomerEntity> getCustomerById = customerService.findById(id);
         return getCustomerById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCustomer (@PathVariable int id){
+    public ResponseEntity<String> deleteCustomer (@PathVariable Long id){
         customerService.delete(id);
         return ResponseEntity.ok(+ id + " has been deleted");
 

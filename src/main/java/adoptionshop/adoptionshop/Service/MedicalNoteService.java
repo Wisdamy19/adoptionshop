@@ -9,8 +9,12 @@ import java.util.List;
 import java.util.Optional;
 @Service
 public class MedicalNoteService {
+
+    private final MedicalNotesRepository medicalNotesRepository;
     @Autowired
-    MedicalNotesRepository medicalNotesRepository;
+    public MedicalNoteService(MedicalNotesRepository medicalNotesRepository){
+        this.medicalNotesRepository = medicalNotesRepository;
+    }
 
     public List<MedicalNotesEntity> findAll(){
         return medicalNotesRepository.findAll();
@@ -20,11 +24,11 @@ public class MedicalNoteService {
         return medicalNotesRepository.save(medicalNotesEntity);
     }
 
-    public Optional<MedicalNotesEntity> findById(int id){
+    public Optional<MedicalNotesEntity> findById(Long id){
         return medicalNotesRepository.findById(id);
     }
 
-    public void delete(int id){
+    public void delete(Long id){
         medicalNotesRepository.deleteById(id);
     }
 }
