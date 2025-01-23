@@ -26,7 +26,7 @@ public class AnimalEntity {
     @Column(name = "animal_id")
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('DOG', 'CAT')")
     private Type type;
 

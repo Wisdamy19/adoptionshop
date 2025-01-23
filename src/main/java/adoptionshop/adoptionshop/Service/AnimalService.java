@@ -31,15 +31,14 @@ public class AnimalService {
     public void delete(Long id) {
         animalRepository.deleteById(id);
     }
-    public void Update(AnimalEntity animalEntity){
+    public AnimalEntity updateAnimal(AnimalEntity animalEntity){
         if (animalEntity == null || animalEntity.getId() == null){
             throw new IllegalArgumentException("Invalid.");
         }
         if (!animalRepository.existsById(animalEntity.getId())){
             throw new EntityNotFoundException("Animal with ID " + animalEntity.getId() + " not found.");
         }
-        animalRepository.save(animalEntity);
-
+        return animalRepository.save(animalEntity);
     }
 
 }
