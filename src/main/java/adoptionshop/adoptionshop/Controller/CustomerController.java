@@ -41,4 +41,23 @@ public class CustomerController {
         return ResponseEntity.ok(+ id + " has been deleted");
 
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerEntity> updateCustomer(@PathVariable Long id, @RequestBody CustomerEntity updatedCustomer){
+        Optional<CustomerEntity> existingCustomerOp = customerService.findById(id);
+        if (!existingCustomerOp.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        CustomerEntity existingCustomer = existingCustomerOp.get();
+
+        existingCustomer.setName(updatedCustomer.getName());
+        existingCustomer.setEmail(updatedCustomer.getEmail());
+        existingCustomer.setPassword(updatedCustomer.getPassword());
+        existingCustomer.setTelephone(updatedCustomer.getTelephone());
+        existingCustomer.setCpf(updatedCustomer.getCpf());
+
+        CustomerEntity savedCustomer = customerService.updateCustomer(existingCustomer);
+        return ResponseEntity.ok(savedCustomer);
+
+    }
 }

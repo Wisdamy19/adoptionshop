@@ -63,8 +63,5 @@ public class AnimalController {
 
             AnimalEntity savedAnimal = animalService.updateAnimal(existingAnimal);
             return ResponseEntity.ok(savedAnimal);
-
     }
-
-
 }
