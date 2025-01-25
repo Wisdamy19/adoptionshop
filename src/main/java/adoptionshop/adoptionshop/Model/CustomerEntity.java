@@ -33,7 +33,7 @@ public class CustomerEntity {
     @Column(name = "telephone")
     private String telephone;
 
-    @Column(name = "cpf")
+    @Column(name = "cpf", length = 11)
     private String cpf;
 
     @OneToMany(mappedBy = "customerEntity")

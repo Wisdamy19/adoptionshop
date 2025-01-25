@@ -7,6 +7,7 @@ import adoptionshop.adoptionshop.Model.AdoptionEntity;
 import adoptionshop.adoptionshop.Model.AnimalEntity;
 import adoptionshop.adoptionshop.Repository.AdoptionRepository;
 import adoptionshop.adoptionshop.Repository.AnimalRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,8 @@ public class AdoptionService {
     public void delete(Long id){
         adoptionRepository.deleteById(id);
     }
+
+
 
 
 }

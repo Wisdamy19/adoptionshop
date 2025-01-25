@@ -24,7 +24,11 @@ public class CustomerService {
         return customerRepository.findAll();
     }
     public CustomerEntity save(CustomerEntity customerEntity){
-            return customerRepository.save(customerEntity);
+        if (customerEntity.getCpf()== null || customerEntity.getCpf().length() != 11){
+            throw new IllegalArgumentException("The cpf must consist of 11 digits.");
+        }
+
+        return customerRepository.save(customerEntity);
     }
     public Optional<CustomerEntity> findById(Long id){
         return customerRepository.findById(id);
